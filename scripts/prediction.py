@@ -14,10 +14,10 @@ from sklearn.utils import shuffle
 
 
 # Some globle variables for development
-TEST = True
+TEST = False
 
 # Lets load the data
-df = pd.read_excel('../data/NationalBodyProjectTurk.xlsx')
+df = pd.read_excel('data/NationalBodyProjectTurk.xlsx')
 
 # Useful categories
 cat_demo = ['Sex', 'SexualOrientationX4', 'EthnicityX5', 'RelationshipStatus','CollegeStudent']
@@ -58,7 +58,7 @@ data_sets = {'aggregate': survey_data_aggregate, 'raw': survey_data_raw}
 
 # create the folds
 
-kf = KFold(n_splits=10)
+kf = KFold(n_splits=10, random_state=0)
 
 def score(y, y_pred, X):
     SS_Residual = sum((y-y_pred)**2)
@@ -88,7 +88,7 @@ def preprocess(X_train, X_test, dummy_cats, num_cats):
 def lr_model(X, y, param_grid=None):
 	# Linear Regression
 	lr_cv_test_scores = []
-	for train, test in kf.split(X, random_state=0):
+	for train, test in kf.split(X):
 		X_train = X.loc[train,:]
 		y_train = y[train]
 		X_test = X.loc[test,:]
@@ -106,7 +106,7 @@ def lr_model(X, y, param_grid=None):
 	return lr_cv_test_scores
 
 def rf_model(X, y, param_grid):
-	for train, test in kf.split(X, random_state=0):
+	for train, test in kf.split(X):
 		X_train = X.loc[train,:]
 		y_train = y[train]
 		X_test = X.loc[test, :]
@@ -125,7 +125,7 @@ def rf_model(X, y, param_grid):
 		rf_best_params.append(rf_cv.best_params_)
 		pred = rf_cv.predict(X_test)
 		rf_cv_test_scores.append(score(pred, y_test, X_train))
-	return rf_best_params_, rf_cv_test_scores
+	return rf_best_params, rf_cv_test_scores
 
 ## implementation
 
@@ -185,7 +185,7 @@ for key in data_sets.keys():
 		all_scores['rf_best_params'] = rf_best_params
 
 	output = pd.DataFrame(all_scores)
-	output.to_csv('../outputs/' + key + '.csv')
+	output.to_csv('outputs/' + key + '.csv')
 
 
 
