@@ -173,10 +173,10 @@ for key in data_sets.keys():
 			}
 		else: 
 			param_grid = {
-			    'max_depth': [5, 8, 15, 25, 30],
-			    'min_samples_leaf': [1, 2, 5, 10],
-			    'min_samples_split': [2, 5, 10, 15, 100],
-			    'n_estimators': [100, 300, 500, 800, 1200]
+			    'max_depth': [5, 8, 15],
+			    'min_samples_leaf': [1, 2, 5],
+			    'min_samples_split': [2, 5, 10],
+			    'n_estimators': [100, 300, 500]
 			}
 
 		rf_best_params, rf_cv_test_scores = rf_model(X, y, param_grid)
