@@ -11,9 +11,9 @@ from sklearn.metrics import make_scorer
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.utils import shuffle
 
-from tensorflow.python.keras.models import Sequential
-from tensorflow.python.keras.layers import Dense
-from tensorflow.python.keras.wrappers.scikit_learn import KerasRegressor
+# from tensorflow.python.keras.models import Sequential
+# from tensorflow.python.keras.layers import Dense
+# from tensorflow.python.keras.wrappers.scikit_learn import KerasRegressor
 
 kf = KFold(n_splits=10, random_state=0)
 
@@ -95,31 +95,31 @@ def rf_model(X, y, dummies, num, param_grid):
 	return rf_cv_train_scores, rf_cv_test_scores, rf_best_params
 
 
-def nn_model(X, y, dummies, num, param_grid={1: 12, 2: 8, 3: 1}):
-	X, y = shuffle(X, y)
-	X = X.reset_index(drop=True)
+# def nn_model(X, y, dummies, num, param_grid={1: 12, 2: 8, 3: 1}):
+# 	X, y = shuffle(X, y)
+# 	X = X.reset_index(drop=True)
 
-	nn_cv_test_scores = []
-	nn_cv_train_scores = []
-	for train, test in kf.split(X):
-		X_train = X.loc[train,:]
-		y_train = y[train]
-		X_test = X.loc[test, :]
-		y_test = y[test]
+# 	nn_cv_test_scores = []
+# 	nn_cv_train_scores = []
+# 	for train, test in kf.split(X):
+# 		X_train = X.loc[train,:]
+# 		y_train = y[train]
+# 		X_test = X.loc[test, :]
+# 		y_test = y[test]
 
-		X_train, X_test = preprocess(X_train, X_test, dummies, num)
+# 		X_train, X_test = preprocess(X_train, X_test, dummies, num)
 
-		model = Sequential()
-		model.add(Dense(param_grid[1], input_dim=X_train.shape[1], kernel_initializer='normal', activation='relu'))
-		model.add(Dense(param_grid[2], activation='relu'))
-		model.add(Dense(param_grid[3], activation='linear'))
-		model.summary()
-		model.compile(loss='mse', optimizer='adam', metrics=['mse','mae'])
-		history = model.fit(X_train, y_train, epochs=100, batch_size=50,  verbose=1, validation_split=0.2)
+# 		model = Sequential()
+# 		model.add(Dense(param_grid[1], input_dim=X_train.shape[1], kernel_initializer='normal', activation='relu'))
+# 		model.add(Dense(param_grid[2], activation='relu'))
+# 		model.add(Dense(param_grid[3], activation='linear'))
+# 		model.summary()
+# 		model.compile(loss='mse', optimizer='adam', metrics=['mse','mae'])
+# 		history = model.fit(X_train, y_train, epochs=100, batch_size=50,  verbose=1, validation_split=0.2)
 
-		pred = model.predict(X_test).reshape(-1)
-		nn_cv_test_scores.append(score(y_test, pred, X_train))
+# 		pred = model.predict(X_test).reshape(-1)
+# 		nn_cv_test_scores.append(score(y_test, pred, X_train))
 
-		pred = model.predict(X_train).reshape(-1)
-		nn_cv_train_scores.append(score(y_train, pred, X_train))
-	return nn_cv_train_scores, nn_cv_test_scores
+# 		pred = model.predict(X_train).reshape(-1)
+# 		nn_cv_train_scores.append(score(y_train, pred, X_train))
+# 	return nn_cv_train_scores, nn_cv_test_scores
