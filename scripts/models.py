@@ -9,7 +9,7 @@ from sklearn.pipeline import Pipeline, FeatureUnion, make_pipeline
 from sklearn.metrics import make_scorer
 
 from sklearn.ensemble import RandomForestRegressor
-from sklearn.utils import shuffle, parallel_backend
+from sklearn.utils import shuffle
 
 from tensorflow.python.keras.models import Sequential
 from tensorflow.python.keras.layers import Dense
