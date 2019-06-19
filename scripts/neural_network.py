@@ -107,7 +107,7 @@ def nn_model(X, y, param_grid={1: 12, 2: 8, 3: 1}):
 		model.add(Dense(param_grid[3], activation='linear'))
 		model.summary()
 		model.compile(loss='mse', optimizer='adam', metrics=['mse','mae'])
-		history = model.fit(X_train, y_train, epochs=100, batch_size=50,  verbose=1, validation_split=0.2)
+		history = model.fit(X_train, y_train, epochs=1, batch_size=50,  verbose=1, validation_split=0.2)
 
 		pred = model.predict(X_test).reshape(-1)
 		nn_cv_test_scores.append(score(pred, y_test, X_train))
@@ -147,21 +147,21 @@ for key in data_sets.keys():
 		nn_cv_test_scores = nn_model(X, y, param_grid)
 
 		all_scores['nn_1'] = nn_cv_test_scores
-		all_scores['nn_1_params'] = param_grid
+		#all_scores['nn_1_params'] = param_grid
 
 		param_grid={1: 10, 2: 5, 3: 1}
 
 		nn_cv_test_scores = nn_model(X, y, param_grid)
 
 		all_scores['nn_2'] = nn_cv_test_scores
-		all_scores['nn_2_params'] = param_grid
+		#all_scores['nn_2_params'] = param_grid
 
 		param_grid={1: 5, 2: 5, 3: 1}
 
 		nn_cv_test_scores = nn_model(X, y, param_grid)
 
 		all_scores['nn_3'] = nn_cv_test_scores
-		all_scores['nn_3_params'] = param_grid
+		#all_scores['nn_3_params'] = param_grid
 
 	output = pd.DataFrame(all_scores)
 	output.to_csv('outputs/' + 'nn_' + key + '.csv')
