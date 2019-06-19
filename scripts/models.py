@@ -7,7 +7,6 @@ from sklearn.preprocessing import StandardScaler, PolynomialFeatures, OneHotEnco
 from sklearn.base import TransformerMixin, BaseEstimator
 from sklearn.pipeline import Pipeline, FeatureUnion, make_pipeline
 from sklearn.metrics import make_scorer
-from sklearn.compose import ColumnTransformer, make_column_transformer
 
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.utils import shuffle, parallel_backend
