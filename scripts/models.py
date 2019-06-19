@@ -16,8 +16,6 @@ from tensorflow.python.keras.models import Sequential
 from tensorflow.python.keras.layers import Dense
 from tensorflow.python.keras.wrappers.scikit_learn import KerasRegressor
 
-parallel_backend('loky')
-
 kf = KFold(n_splits=10, random_state=0)
 
 def score(y, y_pred, X):

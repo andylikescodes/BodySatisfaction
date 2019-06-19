@@ -7,7 +7,7 @@ from constants import *
 
 
 # Some globle variables for development
-TEST = True
+TEST = False
 
 # Lets load the data
 df = pd.read_excel('../data/NationalBodyProjectTurk.xlsx')
