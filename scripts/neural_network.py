@@ -90,6 +90,8 @@ def preprocess(X_train, X_test, dummy_cats, num_cats):
 
 
 def nn_model(X, y, param_grid={1: 12, 2: 8, 3: 1}):
+	
+	nn_cv_test_scores = []
 	for train, test in kf.split(X):
 		X_train = X.loc[train,:]
 		y_train = y[train]
@@ -100,7 +102,6 @@ def nn_model(X, y, param_grid={1: 12, 2: 8, 3: 1}):
 
 		X_train, X_test = preprocess(X_train, X_test, dummies, num_demo+data_sets[key])
 
-		nn_cv_test_scores = []
 		model = Sequential()
 		model.add(Dense(param_grid[1], input_dim=X_train.shape[1], kernel_initializer='normal', activation='relu'))
 		model.add(Dense(param_grid[2], activation='relu'))
