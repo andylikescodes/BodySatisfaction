@@ -10,11 +10,13 @@ from sklearn.metrics import make_scorer
 from sklearn.compose import ColumnTransformer, make_column_transformer
 
 from sklearn.ensemble import RandomForestRegressor
-from sklearn.utils import shuffle
+from sklearn.utils import shuffle, parallel_backend
 
 from tensorflow.python.keras.models import Sequential
 from tensorflow.python.keras.layers import Dense
 from tensorflow.python.keras.wrappers.scikit_learn import KerasRegressor
+
+parallel_backend('loky')
 
 kf = KFold(n_splits=10, random_state=0)
 
@@ -116,7 +118,7 @@ def nn_model(X, y, dummies, num, param_grid={1: 12, 2: 8, 3: 1}):
 		model.add(Dense(param_grid[3], activation='linear'))
 		model.summary()
 		model.compile(loss='mse', optimizer='adam', metrics=['mse','mae'])
-		history = model.fit(X_train, y_train, epochs=1, batch_size=50,  verbose=1, validation_split=0.2)
+		history = model.fit(X_train, y_train, epochs=100, batch_size=50,  verbose=1, validation_split=0.2)
 
 		pred = model.predict(X_test).reshape(-1)
 		nn_cv_test_scores.append(score(y_test, pred, X_train))
